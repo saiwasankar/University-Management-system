@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600">
+<rect width="1000" height="600" fill="#f5f8fc"/>
+<text x="500" y="42" text-anchor="middle" font-family="Arial" font-size="25" font-weight="700" fill="#12263a">University Network Services</text>
+<g stroke="#53718f" stroke-width="3" fill="none"><path d="M500 140 L300 235"/><path d="M500 140 L700 235"/><path d="M300 305 L300 390"/><path d="M700 305 L700 390"/></g>
+<g font-family="Arial" text-anchor="middle">
+<rect x="350" y="80" width="300" height="62" rx="12" fill="#123c69"/><text x="500" y="106" font-size="19" font-weight="700" fill="white">R1 ROUTER</text><text x="500" y="128" font-size="13" fill="#dceaff">Server GW 192.168.2.1/24 · Client GW 192.168.1.1/24</text>
+<rect x="180" y="235" width="240" height="70" rx="12" fill="#5576a5"/><text x="300" y="263" font-size="18" font-weight="700" fill="white">SW1 · SERVER LAN</text><text x="300" y="286" font-size="14" fill="#eff5ff">192.168.2.0/24</text>
+<rect x="580" y="235" width="240" height="70" rx="12" fill="#5576a5"/><text x="700" y="263" font-size="18" font-weight="700" fill="white">SW2 · CLIENT LAN</text><text x="700" y="286" font-size="14" fill="#eff5ff">192.168.1.0/24 · up to 200 leases</text>
+<rect x="100" y="390" width="400" height="110" rx="12" fill="#e4f1e9" stroke="#79a88a"/><text x="300" y="418" font-size="17" font-weight="700" fill="#24583c">4 SERVERS + PC0</text><text x="300" y="445" font-size="14" fill="#345a45">DHCP .2 · DNS .3 · Web .4 · Mail .5</text><text x="300" y="472" font-size="13" fill="#345a45">Static servers, PC0 gets DHCP</text>
+<rect x="590" y="390" width="220" height="110" rx="12" fill="#e6edf6" stroke="#9aabc0"/><text x="700" y="419" font-size="17" font-weight="700" fill="#19324d">PC1 · PC2 · PC3 · PC4</text><text x="700" y="447" font-size="14" fill="#425a73">DHCP relay client pool</text><text x="700" y="474" font-size="13" fill="#425a73">200 leases · /24 subnet</text>
+<text x="500" y="553" font-size="13" fill="#536a82">Two directly connected LANs · one router · two standard 2960 switches</text>
+</g></svg>
