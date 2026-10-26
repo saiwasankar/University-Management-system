@@ -1,22 +1,25 @@
 # University Management Network (Cisco Packet Tracer)
 
-A beginner-friendly campus network project using standard Packet Tracer devices and services. The project demonstrates two routed LANs, DHCP and DHCP relay, DNS, an HTTP university portal, and email.
+A campus network prototype demonstrating routed Administration/Services, Student, and Library/Research networks with DHCP, DHCP relay, DNS, a university portal, email, and student Wi-Fi.
 
-## Topology and addressing
+## Portal dashboard
 
-- Cisco 2911 router, two Cisco 2960 switches, four Server-PT devices, and five PCs (PC0–PC4).
-- Server LAN on SW1: `192.168.2.0/24`, gateway `192.168.2.1`.
-- Client LAN on SW2: `192.168.1.0/24`, gateway `192.168.1.1`.
-- DHCP server: `192.168.2.2`; DNS server: `192.168.2.3`; web server: `192.168.2.4`; mail server: `192.168.2.5`.
-- DHCP relay on R1 forwards client LAN requests to `192.168.2.2`; each DHCP pool allows up to 200 leases.
-- Portal DNS: `portal.campus.local` → `192.168.2.4`.
-- Email domain: `campus.com` (Packet Tracer's email client rejected the `.local` domain in this project).
+`dashboard.html` is a static front-end prototype with:
 
-## Files
+- Student portal navigation and campus service cards
+- Searchable sample library catalogue with demo request buttons
+- Examination marks lookup using fictional records (`STU1001`–`STU1003`)
+- Admin sign-in interface prototype
 
-- [`STEP_BY_STEP.md`](STEP_BY_STEP.md): device placement, cabling, service configuration, and verification.
-- [`configs/router-config.txt`](configs/router-config.txt): router interface and DHCP relay configuration.
-- [`dashboard.html`](dashboard.html): static portal page to paste into the Packet Tracer Web Server's `index.html`.
-- [`topology.svg`](topology.svg): logical network diagram.
+The Packet Tracer HTTP service only serves static files. It cannot save shared marks or library requests, run a database, or authenticate the admin form against SMTP/POP3 email accounts. The marks are fictional demo data in the page source; do not add real student records or passwords. A real ERP requires an application backend and database with server-side authentication and authorization.
 
-The Packet Tracer HTTP service serves a static page; it does not run a shared marks database or server-side application. The `.pkt` simulation file is not included in this repository yet.
+To use the page in Packet Tracer, open the Web Server → **Services → HTTP**, replace `index.html` with `dashboard.html`, and save. The portal hostname is `portal.campus.local`.
+
+## Network addressing
+
+- Administration and services: `192.168.2.0/24`; gateway `192.168.2.1`; DHCP/DNS Server0 `192.168.2.2`; web/email Server2 `192.168.2.4`.
+- Students and Wi-Fi: `192.168.1.0/24`; gateway `192.168.1.1`.
+- Library and research: `192.168.3.0/24`; gateway `192.168.3.1`.
+- Student and Library DHCP requests are relayed by R1 to `192.168.2.2`.
+
+See [`STEP_BY_STEP.md`](STEP_BY_STEP.md) for the initial build guide and [`configs/router-config.txt`](configs/router-config.txt) for the original two-LAN router setup. The guide/config predate the later Library LAN and server consolidation; update them to match the final Packet Tracer file before presenting.

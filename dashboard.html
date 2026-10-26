@@ -1,24 +1,177 @@
-<html>
-<head><title>University Network Dashboard</title></head>
-<body bgcolor="#eef3f8" text="#18324a">
-<center>
-<table width="760" cellpadding="16" bgcolor="#123c69">
-<tr><td><font face="Arial" color="white" size="6"><b>UNIVERSITY NETWORK</b></font><br>
-<font face="Arial" color="#dceaff" size="3">NETWORK SERVICES DASHBOARD · PACKET TRACER LAB</font></td></tr>
-</table><br>
-<table width="760" cellpadding="12" bgcolor="white" border="1">
-<tr bgcolor="#1a6e83"><th><font color="white">Network</font></th><th><font color="white">Subnet</font></th><th><font color="white">Gateway</font></th><th><font color="white">Addressing</font></th></tr>
-<tr><td>Server LAN</td><td>192.168.2.0/24</td><td>192.168.2.1</td><td>DHCP pool: up to 200 clients</td></tr>
-<tr><td>Client LAN</td><td>192.168.1.0/24</td><td>192.168.1.1</td><td>DHCP relay pool: up to 200 clients</td></tr>
-</table><br>
-<table width="760" cellpadding="12" bgcolor="white" border="1">
-<tr bgcolor="#1a6e83"><th><font color="white">Service</font></th><th><font color="white">Server</font></th><th><font color="white">Demo check</font></th></tr>
-<tr><td>DHCP</td><td>192.168.2.2</td><td>200 leases per LAN</td></tr>
-<tr><td>DNS</td><td>192.168.2.3</td><td>portal.campus.local resolves</td></tr>
-<tr><td>Web dashboard</td><td>192.168.2.4</td><td>Open http://portal.campus.local</td></tr>
-<tr><td>Email SMTP / POP3</td><td>192.168.2.5</td><td>Send from user1 and receive as user2</td></tr>
-</table><br>
-<table width="760" cellpadding="10" bgcolor="#dce8f4"><tr><td><font face="Arial" size="2">This page is hosted by the simulated Web Server. Confirm current connectivity in Packet Tracer using ping and the router CLI.</font></td></tr></table>
-</center>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Campus Connect | University Portal</title>
+  <style>
+    :root {
+      --navy:#142744; --blue:#315f9f; --teal:#168b8b; --gold:#f0b84b;
+      --ink:#243249; --muted:#718096; --paper:#f3f6fa; --white:#fff;
+      --line:#e1e8f0; --green:#23845c; --shadow:0 8px 24px rgba(20,39,68,.08);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.55 Arial,Helvetica,sans-serif}
+    a{color:inherit}
+    .topbar{background:var(--navy);color:#fff;border-bottom:4px solid var(--gold)}
+    .wrap{width:min(1120px,92%);margin:auto}
+    .nav{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{font-size:20px;font-weight:800;letter-spacing:.4px}
+    .brand small{display:block;color:#b8c9df;font-size:10px;letter-spacing:2px;font-weight:600}
+    .navlinks{display:flex;gap:20px;flex-wrap:wrap}
+    .navlinks a{font-size:13px;color:#e7eef8;text-decoration:none}
+    .navlinks a:hover{color:var(--gold)}
+    .hero{background:linear-gradient(115deg,#142744,#28558a);color:#fff;padding:50px 0 54px}
+    .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:center}
+    .eyebrow{color:var(--gold);font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase}
+    h1{font-size:clamp(34px,5vw,52px);line-height:1.08;margin:10px 0 14px}
+    .hero p{color:#d8e3f2;max-width:620px;margin:0 0 22px}
+    .btn{display:inline-block;border:0;border-radius:6px;padding:11px 16px;background:var(--teal);color:#fff;font-weight:700;text-decoration:none;cursor:pointer}
+    .btn.gold{background:var(--gold);color:var(--navy)}
+    .hero-card{padding:22px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(255,255,255,.08)}
+    .hero-card strong{display:block;font-size:15px;margin-bottom:8px}.hero-card span{font-size:13px;color:#d8e3f2}
+    main{padding:34px 0 54px}
+    .section{margin:0 0 38px;scroll-margin-top:18px}
+    .section-head{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:16px}
+    h2{margin:0;color:var(--navy);font-size:25px}.section-head p{margin:0;color:var(--muted);font-size:13px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+    .card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:20px;box-shadow:var(--shadow)}
+    .card h3{margin:9px 0 5px;color:var(--navy);font-size:17px}.card p{margin:0 0 13px;color:var(--muted);font-size:13px}
+    .icon{height:38px;width:38px;display:grid;place-items:center;background:#e8f2f5;border-radius:9px;color:var(--teal);font-size:20px;font-weight:bold}
+    .service{display:flex;align-items:center;gap:12px}.service b{display:block;color:var(--navy)}.service small{color:var(--muted)}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    label{display:block;margin:10px 0 5px;color:#46566d;font-size:12px;font-weight:700}
+    input,select{width:100%;padding:11px;border:1px solid #ccd6e2;border-radius:6px;background:#fff;color:var(--ink);font:inherit}
+    input:focus,select:focus{outline:2px solid #9bcbd1;border-color:var(--teal)}
+    .form-row{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:end}
+    .notice{padding:12px 14px;background:#fff7e5;border-left:4px solid var(--gold);border-radius:5px;color:#624b1e;font-size:12px;margin-top:12px}
+    .result{display:none;margin-top:14px;padding:15px;background:#edf7f2;border:1px solid #cce8d9;border-radius:8px}
+    .result h3{margin:0 0 8px;color:var(--green)}
+    .marks{width:100%;border-collapse:collapse;background:#fff;margin-top:10px;font-size:13px}
+    .marks th,.marks td{padding:9px;border-bottom:1px solid var(--line);text-align:left}
+    .marks th{color:var(--navy);background:#f4f7fb}
+    .book{display:flex;flex-direction:column;min-height:190px}.book .tag{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase}
+    .book .btn{margin-top:auto;align-self:flex-start;padding:8px 11px;font-size:12px}
+    .book-status{min-height:20px;color:var(--green);font-size:12px;margin-top:8px}
+    .admin-box{max-width:680px}
+    .warning{padding:14px 16px;background:#fff0ef;border-left:4px solid #db6b5f;border-radius:5px;color:#71342e;font-size:13px;margin:14px 0}
+    .msg{font-size:13px;margin-top:10px;color:var(--blue)}
+    .footer{background:var(--navy);color:#d8e3f2;padding:22px 0;font-size:12px}
+    .footer strong{color:#fff}
+    @media(max-width:760px){.hero-grid,.split{grid-template-columns:1fr}.grid{grid-template-columns:1fr 1fr}.nav{padding:14px 0;align-items:flex-start;flex-direction:column}.navlinks{gap:12px}.section-head{align-items:flex-start;flex-direction:column}}
+    @media(max-width:480px){.grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap nav">
+      <div class="brand">CAMPUS CONNECT<small>UNIVERSITY MANAGEMENT PORTAL</small></div>
+      <nav class="navlinks" aria-label="Main navigation">
+        <a href="#student">Student Portal</a><a href="#marks">Examination</a><a href="#library">Library</a><a href="#admin">Admin Login</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div><div class="eyebrow">One campus · connected services</div>
+        <h1>Your university, in one place.</h1>
+        <p>Access student information, examination results, library resources, and campus support through the university network.</p>
+        <a class="btn gold" href="#student">Open student services</a>
+      </div>
+      <div class="hero-card"><strong>Campus network status</strong><span>Administration & services · Academic network · Library & research<br><br>Portal hosted on the university web server.</span></div>
+    </div>
+  </section>
+
+  <main class="wrap">
+    <section class="section" id="student">
+      <div class="section-head"><h2>Student Portal</h2><p>Quick access to campus services</p></div>
+      <div class="grid">
+        <article class="card"><div class="icon">▤</div><h3>Examination results</h3><p>Look up a sample marks statement using a student ID.</p><a class="btn" href="#marks">Check marks</a></article>
+        <article class="card"><div class="icon">▣</div><h3>Library services</h3><p>Search the sample catalogue and view borrowing information.</p><a class="btn" href="#library">Explore library</a></article>
+        <article class="card"><div class="icon">✉</div><h3>Campus communication</h3><p>University email is available through the Packet Tracer mail service.</p><span style="font-size:12px;color:#718096">Mail domain: campus.com</span></article>
+      </div>
+    </section>
+
+    <section class="section" id="marks">
+      <div class="section-head"><h2>Examination & Marks</h2><p>Demonstration lookup · fictional records only</p></div>
+      <div class="card">
+        <p>Enter a demo student ID to view a sample result.</p>
+        <form id="marksForm" class="form-row"><div><label for="studentId">Student ID</label><input id="studentId" placeholder="For example: STU1001" required></div><button class="btn" type="submit">Find marks</button></form>
+        <div id="marksResult" class="result" aria-live="polite"></div>
+        <div id="marksMessage" class="msg" aria-live="polite"></div>
+        <div class="notice">These sample marks are stored in this page’s JavaScript for demonstration. They are not private, shared, or saved to a database. Do not enter real student records here.</div>
+      </div>
+    </section>
+
+    <section class="section" id="library">
+      <div class="section-head"><h2>Library Management</h2><p>Search the sample catalogue</p></div>
+      <div class="card" style="margin-bottom:14px"><label for="bookSearch">Search by title or subject</label><input id="bookSearch" placeholder="Try networking, database, or algorithms"></div>
+      <div class="grid" id="bookGrid"></div>
+      <div class="notice">Borrow buttons are a front-end demonstration only. Packet Tracer’s static web server does not save requests or manage a shared library database.</div>
+    </section>
+
+    <section class="section" id="admin">
+      <div class="section-head"><h2>Admin Portal</h2><p>Staff sign-in interface prototype</p></div>
+      <div class="card admin-box">
+        <form id="adminForm">
+          <label for="adminEmail">University email</label><input id="adminEmail" type="email" placeholder="staff@campus.com" required>
+          <label for="adminPassword">Password</label><input id="adminPassword" type="password" placeholder="Enter password" required>
+          <p style="margin:14px 0 0"><button class="btn" type="submit">Sign in</button></p>
+        </form>
+        <div id="adminMessage" class="msg" aria-live="polite"></div>
+        <div class="warning"><strong>Authentication is not connected.</strong> Packet Tracer’s built-in HTTP server cannot check this form against its SMTP/POP3 email accounts or restrict access securely. This form is only a visual prototype; real admin-only access requires a backend authentication service. Do not use real passwords here.</div>
+      </div>
+    </section>
+
+    <section class="section" id="network">
+      <div class="section-head"><h2>Campus Network</h2><p>Three connected campus areas</p></div>
+      <div class="grid">
+        <div class="card service"><div class="icon">A</div><div><b>Administration & services</b><small>192.168.2.0/24 · DHCP/DNS .2.2 · Web/Mail .2.4</small></div></div>
+        <div class="card service"><div class="icon">S</div><div><b>Students & Wi-Fi</b><small>192.168.1.0/24 · gateway 192.168.1.1</small></div></div>
+        <div class="card service"><div class="icon">L</div><div><b>Library & research</b><small>192.168.3.0/24 · gateway 192.168.3.1</small></div></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap"><strong>Campus Connect</strong> · University Network Project<br>Static Packet Tracer portal prototype · Demonstration data only</div></footer>
+
+  <script>
+    // Fictional demonstration records only. Replace only with non-sensitive sample data.
+    var demoMarks = {
+      STU1001:{name:'Aarav Mehta',program:'B.Sc. Computer Science · Year 2',subjects:[['Computer Networks',86],['Data Structures',82],['Database Systems',78],['Operating Systems',88]]},
+      STU1002:{name:'Mira Shah',program:'B.Sc. Computer Science · Year 2',subjects:[['Computer Networks',91],['Data Structures',87],['Database Systems',84],['Operating Systems',89]]},
+      STU1003:{name:'Dev Rao',program:'B.Sc. Computer Science · Year 2',subjects:[['Computer Networks',72],['Data Structures',76],['Database Systems',69],['Operating Systems',74]]}
+    };
+    var books=[
+      {title:'Computer Networking: A Top-Down Approach',subject:'Networking',author:'J. Kurose & K. Ross',status:'Available'},
+      {title:'Data Communications and Networking',subject:'Networking',author:'B. Forouzan',status:'Available'},
+      {title:'Database System Concepts',subject:'Database',author:'A. Silberschatz et al.',status:'On loan'},
+      {title:'Introduction to Algorithms',subject:'Algorithms',author:'T. Cormen et al.',status:'Available'},
+      {title:'Operating System Concepts',subject:'Systems',author:'A. Silberschatz et al.',status:'Available'},
+      {title:'Computer Organization and Design',subject:'Computing',author:'D. Patterson & J. Hennessy',status:'On loan'}
+    ];
+    var marksForm=document.getElementById('marksForm');
+    marksForm.addEventListener('submit',function(e){
+      e.preventDefault();var id=document.getElementById('studentId').value.trim().toUpperCase();
+      var rec=demoMarks[id],out=document.getElementById('marksResult'),msg=document.getElementById('marksMessage');
+      if(!rec){out.style.display='none';msg.textContent='No demo record found. Try STU1001, STU1002, or STU1003.';return;}
+      var total=0,rows='';for(var i=0;i<rec.subjects.length;i++){total+=rec.subjects[i][1];rows+='<tr><td>'+rec.subjects[i][0]+'</td><td>'+rec.subjects[i][1]+'</td></tr>';}
+      out.innerHTML='<h3>'+rec.name+'</h3><div>'+id+' · '+rec.program+'</div><table class="marks"><thead><tr><th>Subject</th><th>Marks / 100</th></tr></thead><tbody>'+rows+'</tbody></table><p><strong>Total: '+total+'/'+(rec.subjects.length*100)+' · Average: '+(total/rec.subjects.length).toFixed(1)+'%</strong></p>';
+      out.style.display='block';msg.textContent='';
+    });
+    function renderBooks(query){
+      var grid=document.getElementById('bookGrid');grid.innerHTML='';var q=query.toLowerCase(),shown=0;
+      for(var i=0;i<books.length;i++){var b=books[i];if((b.title+' '+b.subject+' '+b.author).toLowerCase().indexOf(q)===-1)continue;shown++;
+        var card=document.createElement('article');card.className='card book';
+        card.innerHTML='<span class="tag">'+b.subject+'</span><h3>'+b.title+'</h3><p>'+b.author+'<br>Status: '+b.status+'</p><button class="btn" type="button" '+(b.status==='On loan'?'disabled':'')+'>Request book</button><div class="book-status"></div>';
+        var button=card.querySelector('button'),status=card.querySelector('.book-status');button.addEventListener('click',function(el){return function(){el.textContent='Demo request noted on this page only; it is not saved or sent.';};}(status));grid.appendChild(card);
+      }
+      if(!shown)grid.innerHTML='<div class="card">No matching books in the sample catalogue.</div>';
+    }
+    document.getElementById('bookSearch').addEventListener('input',function(){renderBooks(this.value);});renderBooks('');
+    document.getElementById('adminForm').addEventListener('submit',function(e){e.preventDefault();document.getElementById('adminMessage').textContent='Sign-in was not attempted: this Packet Tracer page has no backend to verify registered email accounts.';});
+  </script>
 </body>
 </html>
